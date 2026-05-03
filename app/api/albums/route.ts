@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { pool, query } from '@/lib/db';
+import { query } from '@/lib/db';
 import { getMediaUrl } from '@/lib/upload';
 
 export async function GET(request: NextRequest) {
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 
     sql += ` ORDER BY a.created_at DESC LIMIT ${limitVal}`;
 
-    const [rows] = await pool.execute(sql, params);
+    const rows = await query(sql, params);
     const albums = rows as any[];
 
     const albumsWithUrls = albums.map((album) => ({
