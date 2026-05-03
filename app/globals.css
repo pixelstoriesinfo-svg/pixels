@@ -1,26 +1,253 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --dark-bg: #0d0916;
+    --primary-color: #a754f8;
+    --primary-light: #a754f8;
+    --secondary-bg: #1a1228;
+    --text-color: #e6e0f5;
+    --heading-color: #ffffff;
+    --border-color: #2a2040;
+    --brand-purple: #a754f8;
+    --brand-teal: #a754f8;
+    --stories-purple: #C9B8FF;
+    --weds-purple: #5B21B6;
+    --media-purple: #B8A5E0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--dark-bg);
+    min-height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  body {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Calendly iframe responsive styles */
+.calendly-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.calendly-wrapper iframe {
+  width: 100% !important;
+  border: none;
+  scrollbar-width: none !important;
+  overflow: hidden !important;
+}
+
+.calendly-wrapper iframe::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+
+@media (max-width: 640px) {
+  iframe[src*="calendly"] {
+    height: 850px !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  iframe[src*="calendly"] {
+    height: 900px !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  iframe[src*="calendly"] {
+    height: 900px !important;
+  }
+}
+
+/* Adjust Calendly iframe positioning */
+.calendly-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.calendly-wrapper iframe {
+  width: 100% !important;
+  border: none;
+  scrollbar-width: none !important;
+}
+
+@media (max-width: 640px) {
+  .calendly-wrapper iframe {
+    margin-top: 0 !important;
+  }
+}
+
+@media (min-width: 641px) {
+  .calendly-wrapper iframe {
+    margin-top: -30px !important;
+  }
+}
+
+.calendly-wrapper iframe::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+
+/* Calendly overlay scrollbar */
+.calendly-scrollbar-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.calendly-overlay-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.calendly-overlay-scrollbar.visible {
+  opacity: 1;
+}
+
+.calendly-overlay-scrollbar-thumb {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  background: rgba(167, 84, 248, 0.8);
+  border-radius: 3px;
+  min-height: 30px;
+}
+
+@layer components {
+  .section {
+    @apply py-24 md:py-28;
+  }
+  
+  .section-title h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold relative inline-block pb-4;
+  }
+  
+  .section-title h2::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary rounded-full;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-dark-bg px-6 py-3 font-semibold uppercase rounded-full transition-all duration-300 hover:bg-primary-light hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .btn-outline-primary {
+    @apply border border-primary text-primary px-6 py-2.5 rounded-full transition-all duration-300 hover:bg-primary hover:text-dark-bg;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Swiper customization */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary-color) !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: var(--border-color) !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color) !important;
+}
+
+/* Navbar scroll effect */
+.navbar-scrolled {
+  @apply bg-secondary-bg/90 backdrop-blur-md py-3 shadow-lg border-b border-border-color;
+}
+
+/* Nav underline animation */
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: #a754f8;
+  transition: width 0.3s ease;
+}
+
+.nav-underline-active {
+  width: 100%;
+}
+
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-fade-in-down { animation: fade-in-down 0.6s ease-out forwards; }
+.animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+.animate-gradient-x { background-size: 200% 200%; animation: gradient-x 3s ease infinite; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+
+/* Overlay scrollbar - appears only when scrolling */
+.overlay-scrollbar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 6px;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay-scrollbar.visible {
+  opacity: 1;
+}
+
+.overlay-scrollbar-thumb {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  background: rgba(167, 84, 248, 0.8);
+  border-radius: 3px;
+  min-height: 30px;
 }

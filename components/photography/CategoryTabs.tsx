@@ -1,0 +1,1 @@
+export default function CategoryTabs(){return <div>Tabs</div>}

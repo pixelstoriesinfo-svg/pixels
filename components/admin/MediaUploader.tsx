@@ -1,0 +1,1 @@
+export default function MediaUploader(){return <div>Uploader</div>}
